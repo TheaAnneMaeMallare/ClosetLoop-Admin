@@ -1,0 +1,113 @@
+/* ===== GLOBAL THEME for ClosetLoop Admin Dashboard ===== */
+
+/* Import clean font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Reset browser defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🌸 Soft pastel gradient background */
+body {
+  background: linear-gradient(
+    135deg,
+    #c6e2c6 0%,
+    #fff0f6 50%,
+    #de638a 100%
+  ); /* mint → pale pink → brand pink */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Headings */
+h1, h2, h3 {
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+/* Links */
+a {
+  color: #de638a;
+  text-decoration: none;
+  transition: 0.3s;
+}
+a:hover {
+  text-decoration: underline;
+  color: #c85b7e;
+}
+
+/* Buttons (global theme) */
+button {
+  background-color: #de638a; /* brand pink */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+button:hover {
+  background-color: #c85b7e;
+}
+
+/* Inputs */
+input, select, textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #de638a;
+  outline: none;
+  box-shadow: 0 0 4px rgba(222, 99, 138, 0.4);
+}
+
+/* Centered layout utility */
+.container-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Card-style panels (used for login, etc.) */
+.card {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(15px);
+  width: 100%;
+  max-width: 380px;
+}
+
+
+/* Simple grid layout (for dashboard cards) */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* Optional: subtle glass container for dashboard content */
+.main-container {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
