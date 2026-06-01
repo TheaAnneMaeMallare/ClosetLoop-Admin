@@ -582,11 +582,11 @@ export default function Posts() {
             </span>
           </div>
 
-          <div style={{ overflowX: "auto" }}>
+          <div style={{ overflowX: "hidden" }}>
             <table
               style={{
                 ...ADMIN_TABLE_STYLE,
-                minWidth: 980,
+                minWidth: 0,
               }}
             >
               <thead>
@@ -597,7 +597,7 @@ export default function Posts() {
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
                       cursor: "pointer",
                       userSelect: "none",
-                      width: 320,
+                      width: "26%",
                     }}
                     onClick={() => handleSort("product")}
                   >
@@ -619,7 +619,7 @@ export default function Posts() {
                   <th
                     style={{
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
-                      width: 150,
+                      width: "13%",
                     }}
                   >
                     Condition
@@ -627,7 +627,7 @@ export default function Posts() {
                   <th
                     style={{
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
-                      width: 130,
+                      width: "14%",
                     }}
                   >
                     Type
@@ -635,7 +635,7 @@ export default function Posts() {
                   <th
                     style={{
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
-                      width: 90,
+                      width: "8%",
                     }}
                   >
                     Size
@@ -645,7 +645,7 @@ export default function Posts() {
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
                       cursor: "pointer",
                       userSelect: "none",
-                      width: 170,
+                      width: "15%",
                     }}
                     onClick={() => handleSort("location")}
                   >
@@ -669,7 +669,7 @@ export default function Posts() {
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
                       cursor: "pointer",
                       userSelect: "none",
-                      width: 130,
+                      width: "12%",
                     }}
                     onClick={() => handleSort("date")}
                   >
@@ -690,7 +690,7 @@ export default function Posts() {
                   <th
                     style={{
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
-                      width: 190,
+                      width: "12%",
                     }}
                   >
                     Actions
@@ -817,14 +817,15 @@ export default function Posts() {
                             style={{
                               display: "flex",
                               gap: 6,
-                              flexWrap: "wrap",
+                              flexWrap: "nowrap",
+                              alignItems: "center",
                             }}
                           >
                             <button
                               type="button"
                               onClick={() => setSelectedPost(p)}
                               style={{
-                                padding: "5px 10px",
+                                padding: "5px 8px",
                                 borderRadius: 8,
                                 border: "1px solid #e5e7eb",
                                 background: "#f9fafb",
@@ -832,15 +833,16 @@ export default function Posts() {
                                 fontSize: 11,
                                 fontWeight: 500,
                                 cursor: "pointer",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              View details
+                              View
                             </button>
                             <button
                               type="button"
                               onClick={() => handleDeletePost(p)}
                               style={{
-                                padding: "5px 10px",
+                                padding: "5px 8px",
                                 borderRadius: 8,
                                 border: "1px solid #de638a",
                                 background: "#fff",
@@ -848,6 +850,7 @@ export default function Posts() {
                                 fontSize: 11,
                                 fontWeight: 600,
                                 cursor: "pointer",
+                                whiteSpace: "nowrap",
                               }}
                             >
                               Delete

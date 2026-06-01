@@ -216,8 +216,8 @@ export default function DIYPosts() {
             style={{
               ...ADMIN_TABLE_CARD_STYLE,
               marginTop: 16,
-              padding: "28px 28px 24px",
-              maxWidth: 860,
+              padding: 0,
+              maxWidth: 1120,
               marginLeft: "auto",
               marginRight: "auto",
             }}
@@ -229,12 +229,9 @@ export default function DIYPosts() {
                 justifyContent: "space-between",
                 gap: 12,
                 flexWrap: "wrap",
-                background: "#fff",
-                border: "1px solid #eef1f4",
-                borderRadius: 12,
-                padding: "10px 14px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
-                marginBottom: 18,
+                background: "#fff7fb",
+                borderBottom: "1px solid #f2dbe5",
+                padding: "12px 16px",
               }}
             >
               <div
@@ -279,10 +276,10 @@ export default function DIYPosts() {
                 onClick={closeDetails}
                 style={{
                   background: "#fff",
-                  border: "1px solid #d1d5db",
-                  color: "#374151",
-                  borderRadius: 8,
-                  padding: "7px 11px",
+                border: "1px solid #d1d5db",
+                color: "#374151",
+                borderRadius: 8,
+                  padding: "7px 10px",
                   fontSize: 12,
                   fontWeight: 800,
                   display: "inline-flex",
@@ -292,111 +289,232 @@ export default function DIYPosts() {
                   boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
                 }}
               >
-                <FaArrowLeft size={11} /> Back to DIY Posts
+                <FaArrowLeft size={11} /> Back
               </button>
             </div>
 
-            <h2
-              style={{
-                margin: 0,
-                fontSize: 26,
-                fontWeight: 800,
-                color: "#111",
-              }}
-            >
-              {selected.title}
-            </h2>
-
-            <p
-              style={{
-                margin: "6px 0 16px",
-                fontSize: 14,
-                color: "#444",
-              }}
-            >
-              <strong style={{ color: "#111" }}>Posted by:</strong>{" "}
-              {usersByUid[selected.ownerUid]?.username ? (
-                <span style={{ color: "#de638a", fontWeight: 600 }}>
-                  @{usersByUid[selected.ownerUid].username}
-                </span>
-              ) : (
-                "Unknown user"
-              )}
-            </p>
-
-            <div style={{ marginBottom: 26 }}>
-              <h3
+            <div style={{ padding: "16px 18px 20px" }}>
+              <div
                 style={{
-                  margin: 0,
-                  fontSize: 18,
-                  fontWeight: 700,
-                  color: "#111",
+                  display: "grid",
+                  gridTemplateColumns: "minmax(0, 1.4fr) minmax(260px, 0.8fr)",
+                  gap: 14,
+                  alignItems: "start",
+                  marginBottom: 16,
                 }}
               >
-                Materials
-              </h3>
-
-              <ul style={{ marginTop: 10, paddingLeft: 20 }}>
-                {selected.materials.map((m, idx) => (
-                  <li
-                    key={idx}
+                <div
+                  style={{
+                    border: "1px solid #eef1f4",
+                    borderRadius: 12,
+                    padding: "14px 16px",
+                    background: "#fff",
+                  }}
+                >
+                  <h2
                     style={{
-                      fontSize: 14,
-                      color: "#444",
-                      marginBottom: 6,
+                      margin: 0,
+                      fontSize: 24,
+                      fontWeight: 800,
+                      color: "#111827",
+                      lineHeight: 1.2,
                     }}
                   >
-                    {m}
-                  </li>
-                ))}
-              </ul>
-            </div>
+                    {selected.title}
+                  </h2>
 
-            <div style={{ marginBottom: 20 }}>
-              <h3
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      flexWrap: "wrap",
+                      marginTop: 10,
+                      fontSize: 12,
+                      color: "#4b5563",
+                    }}
+                  >
+                    <span>
+                      <strong style={{ color: "#111827" }}>Author:</strong>{" "}
+                      {usersByUid[selected.ownerUid]?.username ? (
+                        <span style={{ color: "#de638a", fontWeight: 700 }}>
+                          @{usersByUid[selected.ownerUid].username}
+                        </span>
+                      ) : (
+                        "Unknown user"
+                      )}
+                    </span>
+                    <span style={{ color: "#d1d5db" }}>|</span>
+                    <span>{selected.steps.length} steps</span>
+                    <span style={{ color: "#d1d5db" }}>|</span>
+                    <span>{selected.materials.length} materials</span>
+                    {selected.estimatedTime && selected.estimatedTime !== "-" ? (
+                      <>
+                        <span style={{ color: "#d1d5db" }}>|</span>
+                        <span>{selected.estimatedTime}</span>
+                      </>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    border: "1px solid #eef1f4",
+                    borderRadius: 12,
+                    padding: "12px 14px",
+                    background: "#f9fafb",
+                  }}
+                >
+                  <h3
+                    style={{
+                      margin: "0 0 10px",
+                      fontSize: 13,
+                      fontWeight: 800,
+                      color: "#111827",
+                    }}
+                  >
+                    Materials
+                  </h3>
+
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                    {selected.materials.length ? (
+                      selected.materials.map((m, idx) => (
+                        <span
+                          key={idx}
+                          style={{
+                            padding: "5px 8px",
+                            borderRadius: 999,
+                            background: "#fff",
+                            border: "1px solid #e5e7eb",
+                            color: "#374151",
+                            fontSize: 12,
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          {m}
+                        </span>
+                      ))
+                    ) : (
+                      <span style={{ color: "#9ca3af", fontSize: 12 }}>
+                        No materials listed
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div
                 style={{
-                  margin: 0,
-                  fontSize: 18,
-                  fontWeight: 700,
-                  color: "#111",
+                  border: "1px solid #eef1f4",
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  background: "#fff",
                 }}
               >
-                Steps
-              </h3>
+                <div
+                  style={{
+                    padding: "11px 14px",
+                    borderBottom: "1px solid #eef1f4",
+                    background: "#fbfbfc",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 10,
+                  }}
+                >
+                  <h3
+                    style={{
+                      margin: 0,
+                      fontSize: 15,
+                      fontWeight: 800,
+                      color: "#111827",
+                    }}
+                  >
+                    Steps
+                  </h3>
+                  <span style={{ color: "#6b7280", fontSize: 12 }}>
+                    {selected.steps.length} total
+                  </span>
+                </div>
 
-              <ol style={{ marginTop: 14, paddingLeft: 20 }}>
-                {selected.steps.map((s, idx) => (
-                  <li key={idx} style={{ marginBottom: 22 }}>
-                    {s.image && (
-                      <img
-                        src={s.image}
-                        alt="step"
+                <div>
+                  {selected.steps.length ? (
+                    selected.steps.map((s, idx) => (
+                      <div
+                        key={idx}
                         style={{
-                          width: "100%",
-                          maxHeight: 320,
-                          objectFit: "contain",
-                          borderRadius: 14,
-                          marginBottom: 10,
-                          boxShadow: "0 4px 10px rgba(0,0,0,0.12)",
-                          background: "#f9fafb",
+                          display: "grid",
+                          gridTemplateColumns: s.image ? "220px minmax(0, 1fr)" : "1fr",
+                          gap: 14,
+                          alignItems: "start",
+                          padding: "14px",
+                          borderTop: idx === 0 ? "none" : "1px solid #f1f5f9",
                         }}
-                      />
-                    )}
+                      >
+                        {s.image && (
+                          <img
+                            src={s.image}
+                            alt={`Step ${idx + 1}`}
+                            style={{
+                              width: "100%",
+                              height: 150,
+                              objectFit: "cover",
+                              borderRadius: 10,
+                              border: "1px solid #e5e7eb",
+                              background: "#f9fafb",
+                              display: "block",
+                            }}
+                          />
+                        )}
 
-                    <p
+                        <div style={{ minWidth: 0 }}>
+                          <div
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              minWidth: 28,
+                              height: 22,
+                              padding: "0 8px",
+                              borderRadius: 999,
+                              background: "#fff1f6",
+                              color: "#de638a",
+                              fontSize: 12,
+                              fontWeight: 800,
+                              marginBottom: 8,
+                            }}
+                          >
+                            Step {idx + 1}
+                          </div>
+
+                          <p
+                            style={{
+                              margin: 0,
+                              fontSize: 13,
+                              lineHeight: 1.55,
+                              color: "#374151",
+                              whiteSpace: "pre-wrap",
+                            }}
+                          >
+                            {s.text || "No instructions provided."}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div
                       style={{
-                        margin: 0,
-                        fontSize: 15,
-                        lineHeight: "1.55",
-                        color: "#333",
-                        whiteSpace: "pre-wrap",
+                        padding: 18,
+                        color: "#9ca3af",
+                        fontSize: 13,
+                        textAlign: "center",
                       }}
                     >
-                      {s.text}
-                    </p>
-                  </li>
-                ))}
-              </ol>
+                      No steps listed.
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

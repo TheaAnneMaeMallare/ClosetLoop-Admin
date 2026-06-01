@@ -481,24 +481,24 @@ export default function Users() {
           </div>
 
           {/* TABLE */}
-          <div style={{ overflowX: "auto" }}>
+          <div style={{ overflowX: "hidden" }}>
             <table
               style={{
                 ...ADMIN_TABLE_STYLE,
-                minWidth: 1140,
+                minWidth: 0,
               }}
             >
               <thead>
                 <tr style={{ background: "#f9edf5" }}>
-                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: 260 }}>Name</th>
-                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: 150 }}>Username</th>
-                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: 170 }}>Messenger</th>
-                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: 260 }}>Email</th>
-                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: 130 }}>Item Posts</th>
+                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: "23%" }}>Name</th>
+                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: "13%" }}>Username</th>
+                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: "15%" }}>Messenger</th>
+                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: "23%" }}>Email</th>
+                  <th style={{ ...ADMIN_TABLE_HEAD_CELL_STYLE, width: "11%" }}>Item Posts</th>
                   <th
                     style={{
                       ...ADMIN_TABLE_HEAD_CELL_STYLE,
-                      width: 170,
+                      width: "15%",
                       textAlign: "center",
                     }}
                   >
@@ -554,13 +554,20 @@ export default function Users() {
                         <td style={{ ...tdStyle, whiteSpace: "nowrap" }}>{postCount}</td>
 
                         <td style={{ ...tdStyle, textAlign: "center", whiteSpace: "nowrap" }}>
-                          <div style={{ display: "inline-flex", gap: 8 }}>
+                          <div
+                            style={{
+                              display: "inline-flex",
+                              gap: 6,
+                              alignItems: "center",
+                              flexWrap: "nowrap",
+                            }}
+                          >
                             
                             {/* 🔥 VIEW PROFILE — NOW NAVIGATES TO DEDICATED PAGE */}
                             <button
                               onClick={() => navigate(`/admin/users/${u.id}`)}
                               style={{
-                                padding: "6px 12px",
+                                padding: "6px 10px",
                                 borderRadius: 999,
                                 background: "#de638a",
                                 border: "none",
@@ -568,21 +575,23 @@ export default function Users() {
                                 cursor: "pointer",
                                 fontSize: 12,
                                 boxShadow: "0 2px 6px rgba(0,0,0,0.18)",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              View profile
+                              View
                             </button>
 
                             <button
                               onClick={() => handleDeleteUser(u)}
                               style={{
-                                padding: "6px 12px",
+                                padding: "6px 10px",
                                 borderRadius: 999,
                                 border: "1px solid #de638a",
                                 background: "#fff",
                                 color: "#de638a",
                                 cursor: "pointer",
                                 fontSize: 12,
+                                whiteSpace: "nowrap",
                               }}
                             >
                               Delete
