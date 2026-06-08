@@ -605,8 +605,9 @@ export default function Events() {
 
   const compactFilterControlStyle = {
     width: "100%",
-    minHeight: 42,
-    padding: "10px 12px",
+    height: 38,
+    minHeight: 38,
+    padding: "0 12px",
     borderRadius: 10,
     border: "1px solid #e5e7eb",
     fontSize: 13,
@@ -619,7 +620,7 @@ export default function Events() {
 
   const thStyle = {
     ...ADMIN_TABLE_HEAD_CELL_STYLE,
-    padding: "14px 16px",
+    padding: "10px 14px",
     fontSize: 11,
     color: "#6b7280",
     textTransform: "uppercase",
@@ -628,21 +629,21 @@ export default function Events() {
 
   const tdStyle = {
     ...ADMIN_TABLE_CELL_STYLE,
-    padding: "14px 16px",
-    lineHeight: 1.4,
+    padding: "10px 14px",
+    lineHeight: 1.35,
   };
 
   const tdStyleStrong = {
     ...ADMIN_TABLE_CELL_STRONG_STYLE,
-    padding: "14px 16px",
-    lineHeight: 1.4,
+    padding: "10px 14px",
+    lineHeight: 1.35,
   };
 
   const imageBox = {
-    width: 76,
-    height: 76,
+    width: 58,
+    height: 58,
     overflow: "hidden",
-    borderRadius: 12,
+    borderRadius: 10,
     backgroundColor: "#f3f4f6",
     flexShrink: 0,
     display: "flex",
@@ -1016,11 +1017,10 @@ export default function Events() {
               style={{
                 display: "grid",
                 gridTemplateColumns:
-                  "minmax(220px,1.4fr) repeat(4,minmax(140px,0.8fr))",
+                  "minmax(320px, 1.6fr) repeat(3, minmax(150px, 0.8fr))",
                 alignItems: "stretch",
                 gap: 10,
                 width: "100%",
-                maxWidth: 980,
               }}
             >
               <div
@@ -1081,7 +1081,7 @@ export default function Events() {
                   onChange={(e) => setStatusFilter(e.target.value)}
                   style={{
                     ...compactFilterControlStyle,
-                    padding: "10px 12px 10px 30px",
+                    padding: "0 12px 0 30px",
                   }}
                 >
                   <option value="all">All Status</option>
@@ -1112,29 +1112,6 @@ export default function Events() {
                 <option value="oldest">Oldest First</option>
               </select>
 
-              <Button
-                type="button"
-                onClick={clearFilters}
-                style={{
-                  width: "100%",
-                  background: "#fff",
-                  color:
-                    searchTerm || statusFilter !== "all" || locationFilter !== "all" || sortOrder !== "newest"
-                      ? PRIMARY
-                      : "#374151",
-                  borderColor: "#e5e7eb",
-                  borderRadius: 10,
-                  minHeight: 42,
-                  padding: "10px 12px",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  whiteSpace: "nowrap",
-                  boxShadow: "none",
-                }}
-              >
-                <FaTimes />
-                Reset Filters
-              </Button>
             </div>
           </div>
 
