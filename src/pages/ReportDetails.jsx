@@ -975,6 +975,8 @@ export default function ReportDetails() {
           tradeLimitedFeatures: isRestriction,
           tradeRestrictedAt: isRestriction ? serverTimestamp() : deleteField(),
           tradeRestrictedUntil: isRestriction ? until : deleteField(),
+          tradeSuspendedUntil: isRestriction ? until : deleteField(),
+          tradingSuspendedUntil: isRestriction ? until : deleteField(),
           tradeRestrictionReason: isRestriction ? reason : deleteField(),
           cancelledTransactions: Number(behavior.cancelledTransactions || 0),
           completedTransactions: Number(behavior.completedTransactions || 0),
@@ -1171,14 +1173,37 @@ export default function ReportDetails() {
       }
 
       if (effectiveTargetUserId) {
+        const restrictionEndsAt =
+          (recommendation.recommendation.enforcementType === "trade_restriction" ||
+            recommendation.recommendation.enforcementType === "report_restriction") &&
+          recommendation.recommendation.durationDays > 0
+            ? Timestamp.fromDate(
+                new Date(
+                  Date.now() +
+                    recommendation.recommendation.durationDays * 24 * 60 * 60 * 1000
+                )
+              )
+            : null;
+
         batch.set(doc(collection(db, "communityAlerts")), {
           userId: effectiveTargetUserId,
           type: recommendation.recommendation.alertType,
-          category: contentAction ? "Content and Account Review" : "Account Review",
+          category:
+            recommendation.moderationPath === MODERATION_PATHS.TRANSACTION_RESTRICTION
+              ? "Trading Privilege Review"
+              : recommendation.moderationPath === MODERATION_PATHS.FALSE_REPORT_ABUSE
+              ? "Reporting Privilege Review"
+              : contentAction
+              ? "Content and Account Review"
+              : "Account Review",
           message: recommendation.recommendation.message,
           details: report.details || report.category || "Admin reviewed a report.",
           duration: recommendation.recommendation.durationDays || 0,
+          restrictionEndsAt,
           reportId: report.id,
+          moderationActionId,
+          moderationPath: recommendation.moderationPath,
+          source: "admin_report_details",
           isRead: false,
           createdAt: serverTimestamp(),
         });

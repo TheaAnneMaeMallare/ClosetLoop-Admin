@@ -2099,6 +2099,12 @@ export default function Reports() {
               tradeRestrictedUntil: isTradeRestriction
                 ? tradeRestrictionTs
                 : deleteField(),
+              tradeSuspendedUntil: isTradeRestriction
+                ? tradeRestrictionTs
+                : deleteField(),
+              tradingSuspendedUntil: isTradeRestriction
+                ? tradeRestrictionTs
+                : deleteField(),
               tradeRestrictionReason: isTradeRestriction
                 ? restrictionReason
                 : deleteField(),
@@ -2133,6 +2139,22 @@ export default function Reports() {
               ? { seconds: nowSeconds }
               : null,
             tradeRestrictedUntil:
+              isTradeRestriction && tradeRestrictionUntilDate
+                ? {
+                    seconds: Math.floor(
+                      tradeRestrictionUntilDate.getTime() / 1000
+                    ),
+                  }
+                : null,
+            tradeSuspendedUntil:
+              isTradeRestriction && tradeRestrictionUntilDate
+                ? {
+                    seconds: Math.floor(
+                      tradeRestrictionUntilDate.getTime() / 1000
+                    ),
+                  }
+                : null,
+            tradingSuspendedUntil:
               isTradeRestriction && tradeRestrictionUntilDate
                 ? {
                     seconds: Math.floor(
@@ -2197,9 +2219,21 @@ export default function Reports() {
               : nextLevel || 0,
           protectedDuplicate: isProtectedDuplicate,
           duration: recommendation.durationDays || 0,
+          restrictionEndsAt:
+            (recommendation.enforcementType === "trade_restriction" ||
+              recommendation.enforcementType === "report_restriction") &&
+            recommendation.durationDays > 0
+              ? Timestamp.fromDate(
+                  new Date(
+                    Date.now() +
+                      recommendation.durationDays * 24 * 60 * 60 * 1000
+                  )
+                )
+              : null,
           moderationPath,
           moderationScope: recommendationState.scopeLabel,
           targetRole: recommendationState.targetRole,
+          source: "admin_reports",
           ...(recommendation.enforcementType === "suspension" &&
           recommendation.accountStatus === "suspended" &&
           !isProtectedDuplicate
@@ -2632,6 +2666,8 @@ const handleInsightRestriction = async (item) => {
             tradeLimitedFeatures: true,
             tradeRestrictedAt: serverTimestamp(),
             tradeRestrictedUntil: untilTs,
+            tradeSuspendedUntil: untilTs,
+            tradingSuspendedUntil: untilTs,
             tradeRestrictionReason: reason,
             lastTradeRestrictionAt: serverTimestamp(),
             lastTradeRestrictionReason: reason,
@@ -2694,6 +2730,8 @@ const handleInsightRestriction = async (item) => {
             tradeLimitedFeatures: true,
             tradeRestrictedAt: { seconds: nowSeconds },
             tradeRestrictedUntil: untilTs,
+            tradeSuspendedUntil: untilTs,
+            tradingSuspendedUntil: untilTs,
             tradeRestrictionReason: reason,
             lastTradeRestrictionAt: { seconds: nowSeconds },
             lastTradeRestrictionReason: reason,
