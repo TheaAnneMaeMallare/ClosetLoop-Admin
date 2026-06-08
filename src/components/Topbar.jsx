@@ -13,7 +13,7 @@ export default function Topbar() {
         alignItems: "center",
         justifyContent: "flex-start",
         gap: "14px",
-        padding: "0 24px",
+        padding: "0 25px",
         position: "fixed",
         top: 0,
         left: "220px",
@@ -22,7 +22,7 @@ export default function Topbar() {
         zIndex: 10,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ height: "65px", display: "flex", alignItems: "center", gap: 8 }}>
         <button
           type="button"
           onClick={() => navigate("/admin/dashboard")}
@@ -30,12 +30,16 @@ export default function Topbar() {
             border: "none",
             background: "transparent",
             padding: 0,
-            fontSize: 20,
-            fontWeight: 800,
-            color: "#c94f77",
-            lineHeight: 1,
+            fontSize: 18,
+            fontWeight: 700,
+            letterSpacing: "0.5px",
+            color: "#de638a",
+            lineHeight: "normal",
             cursor: "pointer",
             whiteSpace: "nowrap",
+            textShadow: "none",
+            boxShadow: "none",
+            outline: "none",
           }}
         >
           Admin Dashboard

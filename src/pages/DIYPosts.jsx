@@ -638,32 +638,52 @@ export default function DIYPosts() {
         </div>
 
         {/* Search bar */}
-        <div style={{ padding: "12px 16px 16px", position: "relative" }}>
-          <FaSearch
-            style={{
-              position: "absolute",
-              left: 26,
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "#de638a",
-              fontSize: 12,
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Search DIY titles"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+        <div style={{ padding: "12px 16px 16px" }}>
+          <div
             style={{
               width: "100%",
-              padding: "10px 12px 10px 30px",
-              borderRadius: 10,
+              height: 38,
               border: "1px solid #e5e7eb",
-              fontSize: 13,
-              color: "#374151",
-              outline: "none",
+              borderRadius: 10,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "0 10px",
+              background: "#fff",
+              boxSizing: "border-box",
+              minWidth: 0,
             }}
-          />
+          >
+            <FaSearch
+              size={11}
+              style={{
+                color: "#de638a",
+                display: "block",
+                flexShrink: 0,
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Search DIY titles"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                flex: 1,
+                minWidth: 0,
+                width: "100%",
+                height: "100%",
+                border: "none",
+                outline: "none",
+                padding: 0,
+                marginBottom: 0,
+                background: "transparent",
+                backdropFilter: "none",
+                fontSize: 12,
+                color: "#111827",
+                boxShadow: "none",
+              }}
+            />
+          </div>
         </div>
       </div>
 

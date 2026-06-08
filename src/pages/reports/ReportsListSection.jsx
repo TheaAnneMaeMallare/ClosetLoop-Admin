@@ -142,15 +142,27 @@ export function ReportsListSection({
             alignItems: "start",
           }}
         >
-          <div style={{ position: "relative" }}>
+          <div
+            style={{
+              width: "100%",
+              height: 38,
+              border: "1px solid #d8dde6",
+              borderRadius: 12,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "0 10px",
+              background: "#fff",
+              boxSizing: "border-box",
+              minWidth: 0,
+            }}
+          >
             <FaSearch
+              size={11}
               style={{
-                position: "absolute",
-                left: 9,
-                top: "50%",
-                transform: "translateY(-50%)",
-                fontSize: 13,
-                color: "#6b7280",
+                color: "#de638a",
+                display: "block",
+                flexShrink: 0,
               }}
             />
             <input
@@ -158,12 +170,19 @@ export function ReportsListSection({
               onChange={(event) => onSearchChange(event.target.value)}
               placeholder="Search by report ID, name, reason, or keyword..."
               style={{
+                flex: 1,
+                minWidth: 0,
                 width: "100%",
-                padding: "8px 12px 8px 34px",
-                borderRadius: 12,
-                border: "1px solid #d8dde6",
-                fontSize: 12,
+                height: "100%",
+                border: "none",
                 outline: "none",
+                padding: 0,
+                marginBottom: 0,
+                background: "transparent",
+                backdropFilter: "none",
+                fontSize: 12,
+                color: "#111827",
+                boxShadow: "none",
               }}
             />
           </div>

@@ -2299,15 +2299,27 @@ export default function Transactions() {
                 maxWidth: 760,
               }}
             >
-              <div style={{ position: "relative" }}>
+              <div
+                style={{
+                  width: "100%",
+                  height: 38,
+                  border: "1px solid #e5e7eb",
+                  borderRadius: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "0 10px",
+                  background: "#fff",
+                  boxSizing: "border-box",
+                  minWidth: 0,
+                }}
+              >
                 <FaSearch
+                  size={11}
                   style={{
-                    position: "absolute",
-                    left: 10,
-                    top: "50%",
-                    transform: "translateY(-50%)",
                     color: "#de638a",
-                    fontSize: 12,
+                    display: "block",
+                    flexShrink: 0,
                   }}
                 />
                 <input
@@ -2315,13 +2327,19 @@ export default function Transactions() {
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search by ID, user, item..."
                   style={{
+                    flex: 1,
+                    minWidth: 0,
                     width: "100%",
-                    border: "1px solid #e5e7eb",
-                    borderRadius: 10,
-                    padding: "10px 12px 10px 30px",
-                    fontSize: 13,
-                    color: "#374151",
+                    height: "100%",
+                    border: "none",
                     outline: "none",
+                    padding: 0,
+                    marginBottom: 0,
+                    background: "transparent",
+                    backdropFilter: "none",
+                    fontSize: 12,
+                    color: "#111827",
+                    boxShadow: "none",
                   }}
                 />
               </div>

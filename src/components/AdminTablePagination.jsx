@@ -15,19 +15,19 @@ export default function AdminTablePagination({
   const endRow = Math.min(page * rowsPerPage, totalItems);
 
   const pageNumbers = useMemo(() => {
-    const pages = [];
-    let start = Math.max(1, page - 2);
-    let end = Math.min(totalPages, start + 4);
-
-    if (end - start < 4) {
-      start = Math.max(1, end - 4);
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
     }
 
-    for (let value = start; value <= end; value += 1) {
-      pages.push(value);
+    if (page <= 3) {
+      return [1, 2, 3, "end-ellipsis", totalPages];
     }
 
-    return pages;
+    if (page >= totalPages - 2) {
+      return [1, "start-ellipsis", totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [1, "start-ellipsis", page, "end-ellipsis", totalPages];
   }, [page, totalPages]);
 
   const goToPage = (nextPage) => {
@@ -45,7 +45,8 @@ export default function AdminTablePagination({
         gap: 12,
         padding: "12px 16px 14px",
         borderTop: "1px solid #eef1f4",
-        flexWrap: "wrap",
+        flexWrap: "nowrap",
+        overflowX: "auto",
       }}
     >
       <div
@@ -53,7 +54,8 @@ export default function AdminTablePagination({
           display: "flex",
           alignItems: "center",
           gap: 16,
-          flexWrap: "wrap",
+          flexWrap: "nowrap",
+          minWidth: 0,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -100,7 +102,16 @@ export default function AdminTablePagination({
         </span>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          flexWrap: "nowrap",
+          flexShrink: 0,
+          marginLeft: "auto",
+        }}
+      >
         <button
           type="button"
           onClick={() => goToPage(page - 1)}
@@ -126,6 +137,17 @@ export default function AdminTablePagination({
 
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           {pageNumbers.map((pageNumber) => {
+            if (typeof pageNumber === "string") {
+              return (
+                <span
+                  key={pageNumber}
+                  style={{ fontSize: 12, color: "#9ca3af", padding: "0 2px" }}
+                >
+                  ...
+                </span>
+              );
+            }
+
             const isActive = pageNumber === page;
 
             return (
@@ -151,30 +173,6 @@ export default function AdminTablePagination({
             );
           })}
         </div>
-
-        {totalPages > 5 && pageNumbers[pageNumbers.length - 1] < totalPages && (
-          <>
-            <span style={{ fontSize: 12, color: "#9ca3af", padding: "0 2px" }}>...</span>
-            <button
-              type="button"
-              onClick={() => goToPage(totalPages)}
-              style={{
-                minWidth: 34,
-                height: 34,
-                padding: "0 8px",
-                borderRadius: 10,
-                border: "1px solid #d1d5db",
-                background: "#fff",
-                color: "#374151",
-                fontSize: 11,
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              {totalPages}
-            </button>
-          </>
-        )}
 
         <button
           type="button"

@@ -1023,15 +1023,23 @@ export default function Events() {
                 maxWidth: 980,
               }}
             >
-              <div style={{ position: "relative" }}>
+              <div
+                style={{
+                  ...compactFilterControlStyle,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "0 10px",
+                  background: "#fff",
+                  minWidth: 0,
+                }}
+              >
                 <FaSearch
+                  size={11}
                   style={{
-                    position: "absolute",
-                    left: 10,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    fontSize: 12,
                     color: PRIMARY,
+                    display: "block",
+                    flexShrink: 0,
                   }}
                 />
                 <input
@@ -1040,8 +1048,19 @@ export default function Events() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   style={{
-                    ...compactFilterControlStyle,
-                    padding: "10px 12px 10px 30px",
+                    flex: 1,
+                    minWidth: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    outline: "none",
+                    padding: 0,
+                    marginBottom: 0,
+                    background: "transparent",
+                    backdropFilter: "none",
+                    fontSize: 12,
+                    color: "#111827",
+                    boxShadow: "none",
                   }}
                 />
               </div>

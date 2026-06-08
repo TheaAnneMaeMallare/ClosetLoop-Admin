@@ -53,6 +53,23 @@ const CARD_STYLE = {
   boxShadow: "0 6px 18px rgba(0,0,0,0.05)",
 };
 const INSIGHT_CARD_HEIGHT = 320;
+const REPORT_PANEL_CARD_STYLE = {
+  ...CARD_STYLE,
+  height: 520,
+  padding: "16px 18px 18px",
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+};
+const REPORT_PANEL_SCROLL_STYLE = {
+  flex: 1,
+  minHeight: 0,
+  overflowY: "auto",
+  paddingRight: 6,
+};
+const CHART_INTERACTION_STYLE = {
+  outline: "none",
+};
 const RANKING_FILTERS = [
   { key: "week", label: "This Week" },
   { key: "month", label: "This Month" },
@@ -644,8 +661,7 @@ const PendingReportsPanel = ({ reports }) => {
   return (
     <div
       style={{
-        ...CARD_STYLE,
-        padding: "16px 18px 18px",
+        ...REPORT_PANEL_CARD_STYLE,
       }}
     >
       <SectionHeader
@@ -684,7 +700,13 @@ const PendingReportsPanel = ({ reports }) => {
           No pending reports right now.
         </div>
       ) : (
-        <div style={{ display: "grid", gap: 10 }}>
+        <div
+          style={{
+            ...REPORT_PANEL_SCROLL_STYLE,
+            display: "grid",
+            gap: 10,
+          }}
+        >
           {reports.map((report) => (
             <div
               key={report.id}
@@ -695,7 +717,7 @@ const PendingReportsPanel = ({ reports }) => {
                 border: "1px solid #f4d7e3",
                 background: "#fffafb",
                 borderRadius: 14,
-                padding: "12px 14px",
+                padding: "10px 12px",
                 cursor: "pointer",
               }}
             >
@@ -703,7 +725,7 @@ const PendingReportsPanel = ({ reports }) => {
                 style={{
                   display: "grid",
                   gridTemplateColumns: "minmax(0, 1fr) auto",
-                  gap: 12,
+                  gap: 10,
                   alignItems: "start",
                 }}
               >
@@ -780,8 +802,7 @@ const UserRatingRankings = ({ rankingsByFilter }) => {
   return (
     <div
       style={{
-        ...CARD_STYLE,
-        padding: "16px 18px 18px",
+        ...REPORT_PANEL_CARD_STYLE,
       }}
     >
       <SectionHeader
@@ -855,7 +876,13 @@ const UserRatingRankings = ({ rankingsByFilter }) => {
             : "No user ratings found for this period yet."}
         </div>
       ) : (
-        <div style={{ display: "grid", gap: 10 }}>
+        <div
+          style={{
+            ...REPORT_PANEL_SCROLL_STYLE,
+            display: "grid",
+            gap: 10,
+          }}
+        >
           {users.map((rankedUser, index) => (
             <div
               key={rankedUser.id}
@@ -864,20 +891,19 @@ const UserRatingRankings = ({ rankingsByFilter }) => {
                 border: index === 0 ? "1px solid #f5d48a" : "1px solid #f4d7e3",
                 background: index === 0 ? "#fff7e8" : "#fffafb",
                 borderRadius: 14,
-                padding: "12px 14px",
+                padding: "10px 12px",
                 cursor: "pointer",
-                display: "flex",
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 1fr) auto",
                 alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-                flexWrap: "wrap",
+                gap: 10,
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                 <div
                   style={{
-                    width: 34,
-                    height: 34,
+                    width: 30,
+                    height: 30,
                     borderRadius: 10,
                     background: index === 0 ? "#fde7b0" : "#fff1f6",
                     color: index === 0 ? "#9a6700" : PRIMARY_COLOR,
@@ -885,7 +911,7 @@ const UserRatingRankings = ({ rankingsByFilter }) => {
                     alignItems: "center",
                     justifyContent: "center",
                     fontWeight: 800,
-                    fontSize: 14,
+                    fontSize: 13,
                     flexShrink: 0,
                   }}
                 >
@@ -910,6 +936,7 @@ const UserRatingRankings = ({ rankingsByFilter }) => {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
+                        maxWidth: "100%",
                       }}
                     >
                       #{index + 1} {rankedUser.displayName}
@@ -922,7 +949,7 @@ const UserRatingRankings = ({ rankingsByFilter }) => {
                           color: "#9a6700",
                           background: "#fef3c7",
                           borderRadius: 999,
-                          padding: "4px 8px",
+                          padding: "3px 7px",
                         }}
                       >
                         Top Rated
@@ -944,17 +971,17 @@ const UserRatingRankings = ({ rankingsByFilter }) => {
               <div
                 style={{
                   display: "grid",
-                  gap: 4,
+                  gap: 3,
                   justifyItems: "end",
-                  minWidth: 110,
+                  minWidth: 78,
                 }}
               >
                 <div
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: 7,
-                    padding: "7px 10px",
+                    gap: 6,
+                    padding: "6px 9px",
                     borderRadius: 999,
                     background: "#fff7e8",
                     color: "#9a6700",
@@ -986,6 +1013,7 @@ export default function Dashboard() {
   const user = auth.currentUser;
   const userName = user?.displayName || "Admin";
   const location = useLocation();
+  const navigate = useNavigate();
   const [reportPosts, setReportPosts] = useState([]);
   const [pendingReports, setPendingReports] = useState([]);
   const [ratedUsersByFilter, setRatedUsersByFilter] = useState({
@@ -1101,7 +1129,7 @@ export default function Dashboard() {
                 ratingCount: summary?.count || 0,
               };
             })
-            .filter((data) => data.ratingAverage !== null)
+            .filter((data) => data.ratingAverage !== null && data.ratingCount > 0)
             .sort((a, b) => {
               if (b.ratingAverage !== a.ratingAverage) {
                 return b.ratingAverage - a.ratingAverage;
@@ -1198,6 +1226,16 @@ export default function Dashboard() {
 
     return days.map(({ name, value }) => ({ name, value }));
   }, [reportPosts]);
+
+  const goToPosts = (clothingType) => {
+    const type = (clothingType || "").toString().trim();
+
+    navigate(
+      type && type !== "Uncategorized"
+        ? `/admin/posts?clothingType=${encodeURIComponent(type)}`
+        : "/admin/posts"
+    );
+  };
 
   return (
     <div
@@ -1358,13 +1396,11 @@ export default function Dashboard() {
               }}
             >
               <div
-                onClick={() => navigate("/admin/posts")}
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   gap: 6,
                   alignItems: "flex-start",
-                  cursor: "pointer",
                   position: "relative",
                   zIndex: 20,
                 }}
@@ -1378,7 +1414,9 @@ export default function Dashboard() {
                   </p>
                 </div>
 
-                <span
+                <button
+                  type="button"
+                  onClick={() => goToPosts()}
                   style={{
                     border: "none",
                     background: "#fff1f6",
@@ -1390,23 +1428,26 @@ export default function Dashboard() {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 6,
+                    cursor: "pointer",
                   }}
                 >
                   View Items <FaArrowRight size={10} />
-                </span>
+                </button>
               </div>
 
               <div
+                tabIndex={-1}
+                onMouseDown={(event) => event.preventDefault()}
                 style={{
                   height: 260,
                   position: "relative",
                   zIndex: 1,
-                  pointerEvents: "none",
                   overflow: "hidden",
+                  outline: "none",
                 }}
               >
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={postsByType}>
+                  <BarChart data={postsByType} style={CHART_INTERACTION_STYLE}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                       dataKey="name"
@@ -1416,8 +1457,20 @@ export default function Dashboard() {
                       style={{ fontSize: 10 }}
                     />
                     <YAxis allowDecimals={false} />
-                    <ReTooltip />
-                    <Bar dataKey="value" fill="#de638a" radius={[4, 4, 0, 0]} />
+                    <ReTooltip
+                      formatter={(value) => [
+                        `${value} ${value === 1 ? "item" : "items"}`,
+                        "Total",
+                      ]}
+                      labelFormatter={(label) => `Type: ${label}`}
+                    />
+                    <Bar
+                      dataKey="value"
+                      fill="#de638a"
+                      radius={[4, 4, 0, 0]}
+                      cursor="pointer"
+                      onClick={(data) => goToPosts(data?.name)}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -1433,20 +1486,28 @@ export default function Dashboard() {
               </p>
 
               <div
+                tabIndex={-1}
+                onMouseDown={(event) => event.preventDefault()}
                 style={{
                   height: 260,
                   position: "relative",
                   zIndex: 1,
-                  pointerEvents: "none",
                   overflow: "hidden",
+                  outline: "none",
                 }}
               >
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={postsByDay}>
+                  <LineChart data={postsByDay} style={CHART_INTERACTION_STYLE}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" style={{ fontSize: 10 }} />
                     <YAxis allowDecimals={false} />
-                    <ReTooltip />
+                    <ReTooltip
+                      formatter={(value) => [
+                        `${value} ${value === 1 ? "post" : "posts"}`,
+                        "Total",
+                      ]}
+                      labelFormatter={(label) => `Date: ${label}`}
+                    />
                     <Line
                       type="monotone"
                       dataKey="value"

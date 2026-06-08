@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import { useLocation } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaSearch } from "react-icons/fa";
 import AdminTablePagination from "../components/AdminTablePagination";
 import {
   ADMIN_TABLE_CARD_STYLE,
@@ -57,11 +57,15 @@ const SkeletonRow = () => (
 // --- shared styles ---
 const selectStyle = {
   width: "100%",
-  padding: "7px 10px",
+  height: 38,
+  padding: "0 10px",
   borderRadius: 10,
   border: "1px solid #d1d5db",
-  fontSize: 13,
+  fontSize: 12,
+  lineHeight: "38px",
   outline: "none",
+  boxSizing: "border-box",
+  marginBottom: 0,
 };
 
 const tdStyle = {
@@ -106,6 +110,15 @@ const getDisplayStatus = (post) => {
 const formatDate = (v) =>
   v?.seconds ? new Date(v.seconds * 1000).toLocaleDateString() : "-";
 
+const CLOTHING_TYPE_OPTIONS = [
+  "Dress",
+  "T-Shirt",
+  "Jeans",
+  "Pants/Jeans",
+  "Jacket/Coat",
+  "Skirt",
+];
+
 // ---------- Main Component ----------
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -132,6 +145,16 @@ export default function Posts() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const ownerUidFilter = searchParams.get("ownerUid") || "";
+  const clothingTypeFilter = searchParams.get("clothingType") || "";
+  const hasListedType =
+    filterType === "all" || CLOTHING_TYPE_OPTIONS.includes(filterType);
+
+  useEffect(() => {
+    if (!clothingTypeFilter) return;
+
+    setFilterType(clothingTypeFilter);
+    setCurrentPage(1);
+  }, [clothingTypeFilter]);
 
   useEffect(() => {
     const load = async () => {
@@ -510,12 +533,14 @@ export default function Posts() {
                 style={selectStyle}
               >
                 <option value="all">All Clothing Types</option>
-                <option value="Dress">Dress</option>
-                <option value="T-Shirt">T-Shirt</option>
-                <option value="Jeans">Jeans</option>
-                <option value="Pants/Jeans">Pants/Jeans</option>
-                <option value="Jacket/Coat">Jacket/Coat</option>
-                <option value="Skirt">Skirt</option>
+                {!hasListedType && (
+                  <option value={filterType}>{filterType}</option>
+                )}
+                {CLOTHING_TYPE_OPTIONS.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
 
               <select
@@ -534,7 +559,25 @@ export default function Posts() {
                 <option value="Well-worn">Well-worn</option>
               </select>
 
-              <div style={{ position: "relative" }}>
+              <div
+                style={{
+                  ...selectStyle,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "0 10px",
+                  background: "#fff",
+                  minWidth: 0,
+                }}
+              >
+                <FaSearch
+                  size={11}
+                  style={{
+                    color: "#de638a",
+                    display: "block",
+                    flexShrink: 0,
+                  }}
+                />
                 <input
                   type="text"
                   placeholder="Search description, location, size…"
@@ -544,8 +587,20 @@ export default function Posts() {
                     setCurrentPage(1);
                   }}
                   style={{
-                    ...selectStyle,
-                    paddingLeft: 10,
+                    flex: 1,
+                    minWidth: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    outline: "none",
+                    padding: 0,
+                    marginBottom: 0,
+                    background: "transparent",
+                    backdropFilter: "none",
+                    fontSize: 12,
+                    lineHeight: "normal",
+                    color: "#111827",
+                    boxShadow: "none",
                   }}
                 />
               </div>

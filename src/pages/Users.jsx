@@ -227,11 +227,13 @@ export default function Users() {
 
   const inputBase = {
     width: "100%",
-    padding: "7px 10px",
+    height: 38,
+    padding: "0 10px",
     borderRadius: 10,
     border: "1px solid #d1d5db",
     fontSize: 13,
     outline: "none",
+    boxSizing: "border-box",
   };
 
   const tdStyle = ADMIN_TABLE_CELL_STYLE;
@@ -322,10 +324,25 @@ export default function Users() {
               ...ADMIN_TABLE_HEADER_STYLE,
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
               <h2 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>Users List</h2>
-              <span style={{ fontSize: 11, color: "#6b7280" }}>
-                Showing {filtered.length} of {users.length}
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "#6b7280",
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Showing {filtered.length} of {users.length} users
               </span>
             </div>
 
@@ -333,38 +350,64 @@ export default function Users() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(0,2fr) repeat(2,minmax(0,0.7fr))",
-                gap: 8,
+                gridTemplateColumns: "minmax(260px, 1fr) 150px 140px",
+                gap: 10,
+                alignItems: "stretch",
               }}
             >
-              <div style={{ position: "relative" }}>
+              <div
+                style={{
+                  ...inputBase,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "0 10px",
+                  background: "#fff",
+                  minWidth: 0,
+                }}
+              >
                 <FaSearch
+                  size={11}
                   style={{
-                    position: "absolute",
-                    left: 9,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    fontSize: 12,
                     color: "#de638a",
+                    display: "block",
+                    flexShrink: 0,
                   }}
                 />
                 <input
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
                   placeholder="Search by name, username, messenger, email…"
-                  style={{ ...inputBase, paddingLeft: 28 }}
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    outline: "none",
+                    padding: 0,
+                    marginBottom: 0,
+                    background: "transparent",
+                    backdropFilter: "none",
+                    fontSize: 12,
+                    color: "#111827",
+                    boxShadow: "none",
+                  }}
                 />
               </div>
 
               {/* Sort */}
-              <div style={{ position: "relative" }} ref={sortRef}>
+              <div style={{ position: "relative", minWidth: 0 }} ref={sortRef}>
                 <Button
                   onClick={() => setShowSortMenu((p) => !p)}
                   style={{
                     width: "100%",
+                    height: 38,
                     justifyContent: "space-between",
                     background: "#f9fafb",
                     borderColor: "#e5e7eb",
+                    color: "#374151",
+                    boxSizing: "border-box",
                   }}
                 >
                   <span style={{ fontSize: 12 }}>
@@ -424,14 +467,17 @@ export default function Users() {
               </div>
 
               {/* Filter */}
-              <div style={{ position: "relative" }} ref={filterRef}>
+              <div style={{ position: "relative", minWidth: 0 }} ref={filterRef}>
                 <Button
                   onClick={() => setShowFilterMenu((p) => !p)}
                   style={{
                     width: "100%",
+                    height: 38,
                     justifyContent: "space-between",
                     background: "#f9fafb",
                     borderColor: "#e5e7eb",
+                    color: "#374151",
+                    boxSizing: "border-box",
                   }}
                 >
                   <span style={{ fontSize: 12 }}>
@@ -477,6 +523,7 @@ export default function Users() {
                   </div>
                 )}
               </div>
+
             </div>
           </div>
 
