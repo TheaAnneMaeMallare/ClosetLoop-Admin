@@ -157,19 +157,21 @@ export default function Login() {
 
         <form
           onSubmit={handleLogin}
-          autoComplete="off"
+          autoComplete="on"
           style={{ display: "flex", flexDirection: "column", gap: 12 }}
         >
           <div style={getFieldStyle("email")}>
             <FaEnvelope style={{ color: "#98a2b3", flexShrink: 0, fontSize: 14 }} />
             <input
+              id="admin-email"
+              name="email"
               type="email"
               placeholder="Admin Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onFocus={() => setActiveField("email")}
               onBlur={() => setActiveField("")}
-              autoComplete="off"
+              autoComplete="username"
               required
               style={inputStyle}
             />
@@ -178,13 +180,15 @@ export default function Login() {
           <div style={getFieldStyle("password")}>
             <FaLock style={{ color: "#98a2b3", flexShrink: 0, fontSize: 14 }} />
             <input
+              id="admin-password"
+              name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onFocus={() => setActiveField("password")}
               onBlur={() => setActiveField("")}
-              autoComplete="new-password"
+              autoComplete="current-password"
               required
               style={inputStyle}
             />
