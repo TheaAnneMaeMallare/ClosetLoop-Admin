@@ -301,7 +301,9 @@ export default function Login() {
         >
           Can&apos;t access your account?{" "}
           <a
-            href="mailto:closetloopcaps@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=closetloopcaps@gmail.com&su=ClosetLoop%20Admin%20Support"
+            target="_blank"
+            rel="noreferrer"
             style={{
               color: PRIMARY,
               fontWeight: 600,
